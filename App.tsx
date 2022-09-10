@@ -13,13 +13,14 @@ import {Text} from 'react-native';
 
 import styled, {css} from '@emotion/native';
 import Config from 'react-native-config';
+import SvgIcon from './src/components/common/svgIcon/SvgIcon';
 
 const App = () => {
   const Key = Config.API_KEY;
   console.log(Key);
   return (
     <Container>
-      <Text>Hi</Text>
+      <SvgIcon name="PowerOff" />
     </Container>
   );
 };
