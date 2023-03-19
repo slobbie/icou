@@ -11,6 +11,17 @@
     "module": "commonjs",                                /* Specify what module code is generated. */
     // "rootDir": "./",                                  /* Specify the root folder within your source files. */
     "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["src/*"],
+      "@main/*": ["src/main/*"],
+      "@assets/*": ["assets/*"],
+      "@store/*": ["src/redux/store/*", "src/redux/store"],
+      "@common/*": ["src/main/common/*"],
+      "@components/*": ["src/main/common/components/*"],
+      "@feature/*": ["src/main/feature/*"],
+      "@navigation/*": ["src/main/navigation/*", "src/main/navigation/"],
+    },
     /* Completeness */
     "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
        /* JavaScript Support */
