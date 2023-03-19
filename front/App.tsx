@@ -1,16 +1,19 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text} from 'react-native';
 import {Provider} from 'react-redux';
+import styled from 'styled-components/native';
 import store from './src/redux/store';
 
 const App = () => {
   return (
     <Provider store={store}>
-      <View>
+      <SafeAreaView>
         <Text>Hello iCou</Text>
-      </View>
+      </SafeAreaView>
     </Provider>
   );
 };
 
 export default App;
+
+const SafeAreaView = styled.SafeAreaView``;
