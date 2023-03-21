@@ -23,7 +23,7 @@ const BottomTabNavigation = () => {
             <Lottie
               ref={ref}
               loop={false}
-              source={require('@assets/lottieIcon/setting.json')}
+              source={require('@assets/lottieIcon/home.json')}
               style={iconStyle}
             />
           ),
@@ -40,7 +40,7 @@ const BottomTabNavigation = () => {
             <Lottie
               ref={ref}
               loop={false}
-              source={require('@assets/lottieIcon/setting.json')}
+              source={require('@assets/lottieIcon/dashboard.json')}
               style={iconStyle}
             />
           ),
