@@ -1,33 +1,24 @@
-import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
 import React, {useEffect, useRef} from 'react';
-import {LayoutChangeEvent} from 'react-native';
 import styled from 'styled-components/native';
 import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
+import {ITabBarComponent} from '@navigation/interface/bottomTabNavigation.interface';
 
-interface ITabBarComponent {
-  active?: boolean;
-  options: BottomTabNavigationOptions;
-  onLayout: (e: LayoutChangeEvent) => void;
-  onPress: () => void;
-}
-
+// 하단탭 아이콘 컴포넌트
 const TabBarComponent = ({
   onPress,
   onLayout,
   active,
   options,
 }: ITabBarComponent) => {
-  // handle lottie animation -----------------------------------------
-  const ref = useRef<any>(null);
+  const ref = useRef(null);
 
   useEffect(() => {
     if (active && ref?.current) {
-      // @ts-ignore
       ref.current.play();
     }
   }, [active]);
-  // animations ------------------------------------------------------
 
+  // 하단 메뉴 아이콘 박스 애니메이션
   const animatedComponentCircleStyles = useAnimatedStyle(() => {
     return {
       transform: [
@@ -38,6 +29,7 @@ const TabBarComponent = ({
     };
   });
 
+  // 아이콘 애니메이션
   const animatedIconContainerStyles = useAnimatedStyle(() => {
     return {
       opacity: withTiming(active ? 1 : 0.5, {duration: 250}),
@@ -48,9 +40,7 @@ const TabBarComponent = ({
     <Pressable onLayout={onLayout} onPress={onPress}>
       <Circle style={animatedComponentCircleStyles}>
         <Icon style={animatedIconContainerStyles}>
-          {/* {options.tabBarIcon} */}
-          {/* <Text>?</Text> */}
-          {options.tabBarIcon ? options.tabBarIcon({ref}) : <Text>?</Text>}
+          {options.tabBarIcon && options.tabBarIcon({ ref })}
         </Icon>
       </Circle>
     </Pressable>
@@ -80,5 +70,3 @@ const Icon = styled(Animated.View)`
   justify-content: center;
   align-items: center;
 `;
-
-const Text = styled.Text``;
