@@ -7,7 +7,7 @@ import store from './src/redux/store';
 const App = () => {
   return (
     <Provider store={store}>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="default" />
       <StackNavigation />
     </Provider>
   );

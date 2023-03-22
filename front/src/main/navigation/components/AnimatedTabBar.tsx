@@ -82,7 +82,7 @@ const AnimatedTabBar = ({
 export default AnimatedTabBar;
 
 const View = styled.View<{bottom?: number}>`
-  padding-bottom: ${props => props.bottom}px;
+  /* padding-bottom: ${props => props.bottom}px; */
   background-color: #fff;
 `;
 
@@ -90,7 +90,6 @@ const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
 const CustomSvg = styled(AnimatedSvg)`
   position: absolute;
-  background-color: #fff;
 `;
 
 const TabBarContainer = styled.View`
