@@ -1,8 +1,8 @@
+import routineSlice from '@feature/home/slice/routine';
 import {combineReducers} from 'redux';
-import todoSlice from '../slice/todo';
 
 const rootReducer = combineReducers({
-  todo: todoSlice.reducer,
+  routine: routineSlice.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
