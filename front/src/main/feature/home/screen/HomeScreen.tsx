@@ -5,6 +5,7 @@ import {Colors} from '@feature/home/util/colors';
 import CardContainer from '@feature/home/components/CardContainer';
 import {useSharedValue} from 'react-native-reanimated';
 
+// 홈스크린
 const HomeScreen = () => {
   const firstPriority = useSharedValue(1);
   const secondPriority = useSharedValue(0.9);

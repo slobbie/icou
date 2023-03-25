@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useMemo} from 'react';
 import Animated from 'react-native-reanimated';
 import styled from 'styled-components/native';
 import {Colors} from '@feature/home/util/colors';
@@ -8,8 +8,9 @@ interface cartProps {
   style: object;
 }
 
+// 홈 카드
 const Card = ({color, style}: cartProps) => {
-  const getColor = () => {
+  const getColor = useCallback(() => {
     switch (color) {
       case Colors.LIGHT_BLUE:
         return Colors.DARK_BLUE;
@@ -18,15 +19,23 @@ const Card = ({color, style}: cartProps) => {
       case Colors.LIGHT_GOLD:
         return Colors.DARK_GOLD;
     }
-  };
+  }, [color]);
+
+  const bgColor = useMemo(
+    () => ({
+      backgroundColor: getColor(),
+    }),
+    [getColor],
+  );
+
   return (
     <View style={style}>
       <Spacer>
         <Container>
-          <Circle style={{backgroundColor: getColor()}} />
+          <Circle style={bgColor} />
           <Box>
-            <TopLine style={{backgroundColor: getColor()}} />
-            <BottomLine style={{backgroundColor: getColor()}} />
+            <TopLine style={bgColor} />
+            <BottomLine style={bgColor} />
           </Box>
         </Container>
       </Spacer>
