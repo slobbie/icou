@@ -27,12 +27,14 @@ const CardContainer = ({
   thirdPriority,
 }: CardContainerProps) => {
   const {width, height} = Dimensions.get('window');
+
   const bottomBuffer = 30;
   // useShardValue() -> Animated.Value를 생성, 이값에 접근 하여 애니메이션 효과를 적용
   // Animated.Value는 변경 가능한 숫자 값으로, 일반 숫자 변수와 달리 값이 변경될 때마다 자동으로 연관된 컴포넌트가 다시 렌더링
   const yTranslation = useSharedValue(bottomBuffer);
   // rotation 값
   const rotation = useSharedValue(bottomBuffer);
+
   const isRightFlick = useSharedValue(true);
 
   // 화면을 드래그 하여 이동하는 제스처 이벤트
