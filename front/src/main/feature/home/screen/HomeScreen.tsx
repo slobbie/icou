@@ -39,7 +39,7 @@ const HomeScreen = () => {
           thirdPriority={thirdPriority}
           color={Colors.LIGHT_BLUE}
         />
-        {/* <CardContainer
+        <CardContainer
           priority={secondPriority}
           firstPriority={firstPriority}
           secondPriority={secondPriority}
@@ -52,7 +52,7 @@ const HomeScreen = () => {
           secondPriority={secondPriority}
           thirdPriority={thirdPriority}
           color={Colors.LIGHT_GOLD}
-        /> */}
+        />
       </Container>
     </RooView>
     // </SafeView>

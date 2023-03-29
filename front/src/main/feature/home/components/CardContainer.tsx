@@ -8,7 +8,9 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import Card from './Card';
+import { useSelector } from 'react-redux';
+import { RootState } from '@store/reducer';
+import styled from 'styled-components/native';
 
 interface CardContainerProps {
   color: string;
@@ -26,6 +28,8 @@ const CardContainer = ({
   secondPriority,
   thirdPriority,
 }: CardContainerProps) => {
+  const routine = useSelector((state: RootState) => state.routine.routine);
+
   const {width, height} = Dimensions.get('window');
 
   const bottomBuffer = 30;
@@ -145,12 +149,86 @@ const CardContainer = ({
     };
   });
 
+
   return (
     // 앱에서 제스처 이벤트를 감지하고 이벤트 처리를 위한 콜백을 등록 할수 있다.
     <GestureDetector gesture={gesture}>
-      <Card color={color} style={style} />
+      <CardBox style={style}>
+        <>
+          {routine.map((item, i) => {
+            <Spacer key={i} >
+              <Container>
+                <Box>
+                  <Title>{item.title}</Title>
+                  <Dec>{item.dec}</Dec>
+                  <Count>{item.count}</Count>
+                  <ConfirmButton>
+                    <ButtonText>확인</ButtonText>
+                  </ConfirmButton>
+                </Box>
+              </Container>
+            </Spacer>
+          })}
+        </>
+      </CardBox>
     </GestureDetector>
   );
 };
 
 export default CardContainer;
+
+
+const CardBox = styled(Animated.View)`
+  flex: 1;
+`;
+
+const Spacer = styled.View`
+  flex: 1;
+`;
+
+const Container = styled.View`
+  flex-direction: row;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Box = styled.View`
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
+
+const Title = styled.Text`
+  font-size: 24px;
+  color: #fff;
+`;
+
+const Dec = styled.Text`
+  margin-top: 10px;
+  color: #fff;
+  font-size: 20px;
+`;
+
+const ConfirmButton = styled.Pressable`
+  width: 100px;
+  height: 50px;
+  border-radius: 5px;
+  margin-top: 10px;
+  background-color: tomato;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ButtonText = styled.Text`
+  color: #fff;
+  font-size: 20px;
+`;
+
+const Count = styled.Text`
+  margin-top: 10px;
+  color: #fff;
+  font-size: 20px;
+`;
