@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-interface routineItemInterface {
+export interface routineItemInterface {
   title?: string;
   dec?: string;
   count?: number;
