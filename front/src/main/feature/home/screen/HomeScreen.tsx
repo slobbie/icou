@@ -4,15 +4,21 @@ import styled from 'styled-components/native';
 import {Colors} from '@feature/home/util/colors';
 import CardContainer from '@feature/home/components/CardContainer';
 import {useSharedValue} from 'react-native-reanimated';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import routineSlice from '../slice/routine';
+import { RootState } from 'redux/store/reducer';
 
 // 홈스크린
 const HomeScreen = () => {
   const dispatch = useDispatch();
+  const routines = useSelector((state: RootState) => state.routine.routine);
   const firstPriority = useSharedValue(1);
   const secondPriority = useSharedValue(0.9);
   const thirdPriority = useSharedValue(0.8);
+  const fourPriority = useSharedValue(0.7);
+  const fivePriority = useSharedValue(0.6);
+
+  // TODO: chat gpt 호출 데이터로 변경 예정
   // 새로운 루틴 입력
   const onCreateRoutine = () => {
     dispatch(
@@ -25,37 +31,39 @@ const HomeScreen = () => {
     );
   };
 
+  // color 와 priority 배열
+  const priorityArray = [
+    {priority: fivePriority, color: Colors.DARK_RED},
+    {priority: fourPriority, color: Colors.DARK_BLUE},
+    {priority: thirdPriority, color: Colors.LIGHT_BLUE},
+    {priority: secondPriority, color: Colors.LIGHT_RED},
+    {priority: firstPriority, color: Colors.LIGHT_GOLD}
+  ]
+
+
   return (
-    // <SafeView>
     <RooView>
       <Container>
         <AddButton>
           <ButtonLabel onPress={onCreateRoutine}>루틴 추가하기</ButtonLabel>
         </AddButton>
-        <CardContainer
-          priority={thirdPriority}
-          firstPriority={firstPriority}
-          secondPriority={secondPriority}
-          thirdPriority={thirdPriority}
-          color={Colors.LIGHT_BLUE}
-        />
-        {/* <CardContainer
-          priority={secondPriority}
-          firstPriority={firstPriority}
-          secondPriority={secondPriority}
-          thirdPriority={thirdPriority}
-          color={Colors.LIGHT_RED}
-        />
-        <CardContainer
-          priority={firstPriority}
-          firstPriority={firstPriority}
-          secondPriority={secondPriority}
-          thirdPriority={thirdPriority}
-          color={Colors.LIGHT_GOLD}
-        /> */}
+        <>
+          {routines.map((routine, i) => (
+            <CardContainer
+              key={i}
+              routine={routine}
+              priority={priorityArray[i].priority}
+              firstPriority={firstPriority}
+              secondPriority={secondPriority}
+              thirdPriority={thirdPriority}
+              fourPriority={fourPriority}
+              fivePriority={fivePriority}
+              color={priorityArray[i].color}
+            />
+          ))}
+        </>
       </Container>
     </RooView>
-    // </SafeView>
   );
 };
 

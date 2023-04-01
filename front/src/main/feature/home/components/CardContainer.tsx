@@ -8,24 +8,33 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import Card from './Card';
+import styled from 'styled-components/native';
+import { routineItemInterface } from '../slice/routine';
 
 interface CardContainerProps {
+  routine?: routineItemInterface
   color: string;
   priority: Animated.SharedValue<number>;
   firstPriority: Animated.SharedValue<number>;
   secondPriority: Animated.SharedValue<number>;
   thirdPriority: Animated.SharedValue<number>;
+  fourPriority?: Animated.SharedValue<number>;
+  fivePriority?: Animated.SharedValue<number>;
 }
 
 // 홈 카드 컨테이너
 const CardContainer = ({
   color,
   priority,
+  routine,
   firstPriority,
   secondPriority,
   thirdPriority,
+  fourPriority,
+  fivePriority
 }: CardContainerProps) => {
+
+  console.log('정해석', priority)
   const {width, height} = Dimensions.get('window');
 
   const bottomBuffer = 30;
@@ -63,6 +72,8 @@ const CardContainer = ({
         firstPriority.value,
         secondPriority.value,
         thirdPriority.value,
+        fourPriority.value,
+        fivePriority.value
       ];
 
       const lastItem = priorities[priorities.length - 1];
@@ -76,6 +87,8 @@ const CardContainer = ({
       firstPriority.value = priorities[0];
       secondPriority.value = priorities[1];
       thirdPriority.value = priorities[2];
+      fourPriority.value = priorities[3];
+      fivePriority.value = priorities[4];
 
       yTranslation.value = withTiming(
         bottomBuffer,
@@ -107,24 +120,29 @@ const CardContainer = ({
       // 카드 높이
       switch (priority.value) {
         case 1:
-          return 150;
+          return 225;
         case 0.9:
-          return 175;
+          return 300;
         case 0.8:
-          return 200;
+          return 375;
+        case 0.7:
+          return 450;
+        case 0.6:
+          return 500;
         default:
           return 0;
       }
     };
+    console.log('카드 높이', getPosition())
     return {
       position: 'absolute',
       height: 200,
-      width: 325,
+      width: 350,
       backgroundColor: color,
       // withTiming 애니메이션을 시작하고 시간에 따라 값을 변화 시킬수 있다.
       bottom: withTiming(getPosition(), {duration: 500}),
       borderRadius: 8,
-      zIndex: priority.value * 100,
+      zIndex: (priority.value) * 100,
       transform: [
         {translateY: yTranslation.value},
         {
@@ -137,6 +155,7 @@ const CardContainer = ({
           )}rad`,
         },
         {
+          // 카드 간격에 따라 크기 조정
           scale: withTiming(priority.value, {
             duration: 500,
           }),
@@ -144,13 +163,85 @@ const CardContainer = ({
       ],
     };
   });
-
   return (
     // 앱에서 제스처 이벤트를 감지하고 이벤트 처리를 위한 콜백을 등록 할수 있다.
     <GestureDetector gesture={gesture}>
-      <Card color={color} style={style} />
+      <CardBox style={style}>
+        <>
+          {/* {card.map((item, i) => { */}
+          <Spacer>
+            <Container>
+              <Box>
+                <Title>{routine?.title}</Title>
+                <Dec>{routine?.dec}</Dec>
+                {/* <Count>{card?.count}</Count> */}
+                {/* <ConfirmButton>
+                  <ButtonText>확인</ButtonText>
+                </ConfirmButton> */}
+              </Box>
+            </Container>
+          </Spacer>
+          {/* })} */}
+        </>
+      </CardBox>
     </GestureDetector>
   );
 };
 
 export default CardContainer;
+
+
+const CardBox = styled(Animated.View)`
+  flex: 1;
+`;
+
+const Spacer = styled.View`
+  flex: 1;
+`;
+
+const Container = styled.View`
+  flex-direction: row;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Box = styled.View`
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
+
+const Title = styled.Text`
+  font-size: 24px;
+  color: #fff;
+`;
+
+const Dec = styled.Text`
+  margin-top: 10px;
+  color: #fff;
+  font-size: 20px;
+`;
+
+// const ConfirmButton = styled.Pressable`
+//   width: 100px;
+//   height: 50px;
+//   border-radius: 5px;
+//   margin-top: 10px;
+//   background-color: tomato;
+//   align-items: center;
+//   justify-content: center;
+// `;
+
+// const ButtonText = styled.Text`
+//   color: #fff;
+//   font-size: 20px;
+// `;
+
+// const Count = styled.Text`
+//   margin-top: 10px;
+//   color: #fff;
+//   font-size: 20px;
+// `;
