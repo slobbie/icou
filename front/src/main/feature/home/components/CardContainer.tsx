@@ -12,9 +12,8 @@ import styled from 'styled-components/native';
 import { routineItemInterface } from '../slice/routine';
 
 interface CardContainerProps {
-  card?: routineItemInterface
+  routine?: routineItemInterface
   color: string;
-  index?: number
   priority: Animated.SharedValue<number>;
   firstPriority: Animated.SharedValue<number>;
   secondPriority: Animated.SharedValue<number>;
@@ -26,9 +25,8 @@ interface CardContainerProps {
 // 홈 카드 컨테이너
 const CardContainer = ({
   color,
-  card,
   priority,
-  index,
+  routine,
   firstPriority,
   secondPriority,
   thirdPriority,
@@ -48,8 +46,6 @@ const CardContainer = ({
 
   const isRightFlick = useSharedValue(true);
 
-  let minus = Number((0.4 + index * 0.1).toFixed(1));
-  console.log(minus)
   // 화면을 드래그 하여 이동하는 제스처 이벤트
   const gesture = Gesture.Pan()
     // pan 제스처가 시작될 때 호출되는 콜백 함수를 등록 하는 메소드
@@ -173,18 +169,18 @@ const CardContainer = ({
       <CardBox style={style}>
         <>
           {/* {card.map((item, i) => { */}
-          {/* <Spacer>
+          <Spacer>
             <Container>
               <Box>
-                <Title>{card?.title}</Title>
-                <Dec>{card?.dec}</Dec>
-                <Count>{card?.count}</Count>
-                <ConfirmButton>
+                <Title>{routine?.title}</Title>
+                <Dec>{routine?.dec}</Dec>
+                {/* <Count>{card?.count}</Count> */}
+                {/* <ConfirmButton>
                   <ButtonText>확인</ButtonText>
-                </ConfirmButton>
+                </ConfirmButton> */}
               </Box>
             </Container>
-          </Spacer> */}
+          </Spacer>
           {/* })} */}
         </>
       </CardBox>
@@ -229,23 +225,23 @@ const Dec = styled.Text`
   font-size: 20px;
 `;
 
-const ConfirmButton = styled.Pressable`
-  width: 100px;
-  height: 50px;
-  border-radius: 5px;
-  margin-top: 10px;
-  background-color: tomato;
-  align-items: center;
-  justify-content: center;
-`;
+// const ConfirmButton = styled.Pressable`
+//   width: 100px;
+//   height: 50px;
+//   border-radius: 5px;
+//   margin-top: 10px;
+//   background-color: tomato;
+//   align-items: center;
+//   justify-content: center;
+// `;
 
-const ButtonText = styled.Text`
-  color: #fff;
-  font-size: 20px;
-`;
+// const ButtonText = styled.Text`
+//   color: #fff;
+//   font-size: 20px;
+// `;
 
-const Count = styled.Text`
-  margin-top: 10px;
-  color: #fff;
-  font-size: 20px;
-`;
+// const Count = styled.Text`
+//   margin-top: 10px;
+//   color: #fff;
+//   font-size: 20px;
+// `;

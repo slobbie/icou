@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import {Colors} from '@feature/home/util/colors';
@@ -11,12 +11,14 @@ import { RootState } from 'redux/store/reducer';
 // 홈스크린
 const HomeScreen = () => {
   const dispatch = useDispatch();
-  const routine = useSelector((state: RootState) => state.routine.routine);
+  const routines = useSelector((state: RootState) => state.routine.routine);
   const firstPriority = useSharedValue(1);
   const secondPriority = useSharedValue(0.9);
   const thirdPriority = useSharedValue(0.8);
   const fourPriority = useSharedValue(0.7);
   const fivePriority = useSharedValue(0.6);
+
+  // TODO: chat gpt 호출 데이터로 변경 예정
   // 새로운 루틴 입력
   const onCreateRoutine = () => {
     dispatch(
@@ -29,12 +31,15 @@ const HomeScreen = () => {
     );
   };
 
-  // const priority = useMemo((i: number) => {
-  //   return firstPriority.value - (4 - i)
-  // }, [])
-  const minus = (index: number) => {
-    return Number((0.4 - index * 0.1).toFixed(1));
-  }
+  // color 와 priority 배열
+  const priorityArray = [
+    {priority: fivePriority, color: Colors.DARK_RED},
+    {priority: fourPriority, color: Colors.DARK_BLUE},
+    {priority: thirdPriority, color: Colors.LIGHT_BLUE},
+    {priority: secondPriority, color: Colors.LIGHT_RED},
+    {priority: firstPriority, color: Colors.LIGHT_GOLD}
+  ]
+
 
   return (
     <RooView>
@@ -42,70 +47,21 @@ const HomeScreen = () => {
         <AddButton>
           <ButtonLabel onPress={onCreateRoutine}>루틴 추가하기</ButtonLabel>
         </AddButton>
-        {/* <>
-          {routine.map((card, i) => {
-            return (
-              <CardContainer
-                key={i}
-                index={i}
-                card={card}
-                priority={firstPriority.value - minus(i)}
-                firstPriority={firstPriority}
-                secondPriority={secondPriority}
-                thirdPriority={thirdPriority}
-                fourPriority={fourPriority}
-                fivePriority={fivePriority}
-                color={Colors.LIGHT_BLUE}
-              />
-            )
-          })}
-        </> */}
-
-        <CardContainer
-          priority={fourPriority}
-          firstPriority={firstPriority}
-          secondPriority={secondPriority}
-          thirdPriority={thirdPriority}
-          fourPriority={fourPriority}
-          fivePriority={fivePriority}
-          color={Colors.DARK_RED}
-        />
-        <CardContainer
-          priority={fivePriority}
-          firstPriority={firstPriority}
-          secondPriority={secondPriority}
-          thirdPriority={thirdPriority}
-          fourPriority={fourPriority}
-          fivePriority={fivePriority}
-          color={Colors.DARK_BLUE}
-        />
-        <CardContainer
-          priority={thirdPriority}
-          firstPriority={firstPriority}
-          secondPriority={secondPriority}
-          thirdPriority={thirdPriority}
-          fourPriority={fourPriority}
-          fivePriority={fivePriority}
-          color={Colors.LIGHT_BLUE}
-        />
-        <CardContainer
-          priority={secondPriority}
-          firstPriority={firstPriority}
-          secondPriority={secondPriority}
-          thirdPriority={thirdPriority}
-          fourPriority={fourPriority}
-          fivePriority={fivePriority}
-          color={Colors.LIGHT_RED}
-        />
-        <CardContainer
-          priority={firstPriority}
-          firstPriority={firstPriority}
-          secondPriority={secondPriority}
-          thirdPriority={thirdPriority}
-          fourPriority={fourPriority}
-          fivePriority={fivePriority}
-          color={Colors.LIGHT_GOLD}
-        />
+        <>
+          {routines.map((routine, i) => (
+            <CardContainer
+              key={i}
+              routine={routine}
+              priority={priorityArray[i].priority}
+              firstPriority={firstPriority}
+              secondPriority={secondPriority}
+              thirdPriority={thirdPriority}
+              fourPriority={fourPriority}
+              fivePriority={fivePriority}
+              color={priorityArray[i].color}
+            />
+          ))}
+        </>
       </Container>
     </RooView>
   );
