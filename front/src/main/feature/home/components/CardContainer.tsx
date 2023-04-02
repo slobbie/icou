@@ -34,7 +34,6 @@ const CardContainer = ({
   fivePriority
 }: CardContainerProps) => {
 
-  console.log('정해석', priority)
   const {width, height} = Dimensions.get('window');
 
   const bottomBuffer = 30;
@@ -133,7 +132,7 @@ const CardContainer = ({
           return 0;
       }
     };
-    console.log('카드 높이', getPosition())
+
     return {
       position: 'absolute',
       height: 200,
