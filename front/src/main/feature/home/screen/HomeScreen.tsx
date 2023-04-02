@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import {Colors} from '@feature/home/util/colors';
 import CardContainer from '@feature/home/components/CardContainer';
 import {useSharedValue} from 'react-native-reanimated';
 import {useDispatch, useSelector} from 'react-redux';
-import routineSlice from '../slice/routine';
-import { RootState } from 'redux/store/reducer';
+import {RootState} from '@store/reducer';
+import BottomSheetCopy from '@common/components/BottomSheet';
 
 // 홈스크린
 const HomeScreen = () => {
@@ -18,18 +18,28 @@ const HomeScreen = () => {
   const fourPriority = useSharedValue(0.7);
   const fivePriority = useSharedValue(0.6);
 
+  const [isBottomSheet, setIsBottomSheet] = useState(false);
+
   // TODO: chat gpt 호출 데이터로 변경 예정
   // 새로운 루틴 입력
   const onCreateRoutine = () => {
-    dispatch(
-      routineSlice.actions.setRoutine({
-        title: '물 5번 마시기',
-        dec: '건강을 위해 물 다섯컵 어때요?',
-        count: 0,
-        isDone: false,
-      }),
-    );
+    setIsBottomSheet(prev => !prev);
+    // setIsBottomSheet((prev) => !prev)
+    // dispatch(
+    //   routineSlice.actions.setRoutine({
+    //     title: '물 5번 마시기',
+    //     dec: '건강을 위해 물 다섯컵 어때요?',
+    //     count: 0,
+    //     isDone: false,
+    //   }),
+    // );
   };
+
+  // 바텀 시트 호출 함수
+  const handlePresentModalPress = useCallback(() => {
+    console.log('실행');
+    setIsBottomSheet(prev => !prev);
+  }, []);
 
   // color 와 priority 배열
   const priorityArray = [
@@ -37,33 +47,40 @@ const HomeScreen = () => {
     {priority: fourPriority, color: Colors.DARK_BLUE},
     {priority: thirdPriority, color: Colors.LIGHT_BLUE},
     {priority: secondPriority, color: Colors.LIGHT_RED},
-    {priority: firstPriority, color: Colors.LIGHT_GOLD}
-  ]
-
+    {priority: firstPriority, color: Colors.LIGHT_GOLD},
+  ];
 
   return (
-    <RooView>
-      <Container>
-        <AddButton>
-          <ButtonLabel onPress={onCreateRoutine}>루틴 추가하기</ButtonLabel>
-        </AddButton>
-        <>
-          {routines.map((routine, i) => (
-            <CardContainer
-              key={i}
-              routine={routine}
-              priority={priorityArray[i].priority}
-              firstPriority={firstPriority}
-              secondPriority={secondPriority}
-              thirdPriority={thirdPriority}
-              fourPriority={fourPriority}
-              fivePriority={fivePriority}
-              color={priorityArray[i].color}
-            />
-          ))}
-        </>
-      </Container>
-    </RooView>
+    <>
+      <RooView>
+        <Container>
+          <AddButton>
+            <ButtonLabel onPress={handlePresentModalPress}>
+              바텀시트 호출
+            </ButtonLabel>
+          </AddButton>
+          <>
+            {routines.map((routine, i) => (
+              <CardContainer
+                key={i}
+                routine={routine}
+                priority={priorityArray[i].priority}
+                firstPriority={firstPriority}
+                secondPriority={secondPriority}
+                thirdPriority={thirdPriority}
+                fourPriority={fourPriority}
+                fivePriority={fivePriority}
+                color={priorityArray[i].color}
+              />
+            ))}
+          </>
+        </Container>
+      </RooView>
+      <BottomSheetCopy
+        modalVisible={isBottomSheet}
+        setModalVisible={setIsBottomSheet}
+      />
+    </>
   );
 };
 
