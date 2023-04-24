@@ -5,6 +5,7 @@
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
     "target": "esnext",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "lib": ["es2017"],
+    "typeRoots": ["assets"],
     "types": ["@types/styled-components-react-native"],                                /* Specify a set of bundled library declaration files that describe the target runtime environment. */
     "jsx": "react-native",
     /* Modules */

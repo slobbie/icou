@@ -81,10 +81,10 @@ const BottomSheet = (props: BottomSheetProps) => {
           <AnimatedBox
             style={{transform: [{translateY: translateY}]}}
             {...panResponders.panHandlers}>
-            {props.children}
-            {/* <TitleBox>
-              <Title>바텀시티</Title>
-            </TitleBox> */}
+            <Box>
+              {props.children}
+              {/* <Title>바텀시트</Title> */}
+            </Box>
           </AnimatedBox>
         </Wrapper>
       </ModalBox>
@@ -120,3 +120,8 @@ const Wrapper = styled.View`
   flex: 1;
   background-color: 'rgba(0, 0, 0, 0.4)';
 `;
+
+const Box = styled.View`
+  width: 100%;
+  height: 78%;
+`
