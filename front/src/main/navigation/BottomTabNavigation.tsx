@@ -3,7 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '@feature/home/screen/HomeScreen';
 import DashBoardScreen from '@feature/dashboard/screen/DashBoardScreen';
 import SettingScreen from '@feature/setting/SettingScreen';
-import AnimatedTabBar from '@navigation/components/AnimatedTabBar';
+// import AnimatedTabBar from '@navigation/components/AnimatedTabBar';
 import Lottie from 'lottie-react-native';
 
 const BottomTabNavigation = () => {
@@ -11,7 +11,9 @@ const BottomTabNavigation = () => {
 
   const iconStyle = useMemo(() => ({width: 36, height: 36}), []);
   return (
-    <Tab.Navigator tabBar={props => <AnimatedTabBar {...props} />}>
+    <Tab.Navigator
+    // tabBar={props => <AnimatedTabBar {...props} />}
+    >
       <Tab.Screen
         name="Home"
         component={HomeScreen}

@@ -23,9 +23,9 @@ const HomeScreen = () => {
   // const fourPriority = useSharedValue(0.7);
   // const fivePriority = useSharedValue(0.6);
 
-  const [isBottomSheet, setIsBottomSheet] = useState<boolean>(true);
+  const [isBottomSheet, setIsBottomSheet] = useState<boolean>(false);
 
-  // const [count, setCount] = useState(0)
+  // const [count, setCount] = useState(0)us
 
 
   // 루틴 호출
@@ -63,24 +63,9 @@ const HomeScreen = () => {
     index?: number;
   }
 
-  // // 파스텔 색상을 랜덤하게 선택하는 함수
-  // const generateRandomPastelColor = (): string => {
-  //   const pastelColors = ['#FF4500', '#00FF00', '#00FFFF', '#FF007F', '#008080', '#0066FF', '#BF94E4', '#2A52BE', '#FF8C00', '#00FF7F']
-  //   const randomIndex = Math.floor(Math.random() * pastelColors.length);
-  //   return pastelColors[randomIndex];
-  // }
-
-  // 사용 예시
-  // const new_color = generateRandomPastelColor()
-
   // 투두 리스트 추가
   const setTodo = () => {
     setIsBottomSheet((prev) => !prev)
-    // dispatch(routineSlice.actions.setRoutine({
-    //   id: count,
-    //   title: `${count}`,
-    //   bgColor: new_color
-    // }))
   }
 
   const TASKS = routines.map((title, index) => ({ title, index }));
@@ -108,11 +93,6 @@ const HomeScreen = () => {
       <Container>
         <RooView>
           {/* <Container> */}
-          {/* <AddButton>
-              <ButtonLabel onPress={handlePresentModalPress}>
-                바텀시트 호출
-              </ButtonLabel>
-            </AddButton> */}
           {/* <>
               {routines.map((routine, i) => (
                 <CardContainer
@@ -128,11 +108,15 @@ const HomeScreen = () => {
                 />
               ))}
             </> */}
-          <LogBox>
-            <Log>어떤 계획이 있으신가요?</Log>
-            <Space />
-            <LogSmall>오늘의 투두를 적어보세요</LogSmall>
-          </LogBox>
+          {routines.length > 3 ?
+            null
+            :
+            <LogBox>
+              <Log>어떤 계획이 있으신가요?</Log>
+              <Space />
+              <LogSmall>오늘의 투두를 적어보세요</LogSmall>
+            </LogBox>
+          }
           <ScrollViewBox>
             {tasks.map((item) => {
               return (
@@ -167,12 +151,12 @@ export default HomeScreen;
 const Container = styled.View`
   flex: 1;
   align-items: center;
-  background-color: #333;
+  background-color: #141515;
 `;
 
 
 const LogBox = styled.View`
-  background-color: #333;
+  background-color: #141515;
   align-items: center;
   justify-content: center;
   height: 200px;
