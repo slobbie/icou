@@ -68,7 +68,19 @@ ${props =>
       width: 24%;
       height: 50px;
     `}
+  ${(props) =>
+    props.disabled ?
+      css`
+    background-color: #eee;
+    color: #8c8c8c;
+    `
+      :
+      css`
+    background-color: #0066FF;
+    color: #fff;
+  `}
 `
+
 
 const Pressable = styled.Pressable<commonButtonProps>`
   border-radius: 5px;
@@ -78,16 +90,6 @@ const Pressable = styled.Pressable<commonButtonProps>`
   color: #eee;
   border-radius: 5px;
   ${sizeStyles};
-  ${(props) =>
-    props.disabled ? css`
-    background-color: #eee;
-    color: #8c8c8c;
-  `
-      :
-      css`
-    background-color: ##0066FF;
-    color: #fff;
-  `}
 `
 
 const Text = styled.Text<commonButtonProps>`
