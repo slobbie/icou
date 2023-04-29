@@ -5,6 +5,7 @@ import {Provider} from 'react-redux';
 import store from './src/redux/store';
 import {ThemeProvider} from 'styled-components/native';
 import appTheme from '@common/styles/appTheme';
+import GlobalPopup from 'main/common/components/popup/useGlobalPopup';
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <ThemeProvider theme={appTheme}>
         <StatusBar barStyle="default" />
         <StackNavigation />
+        <GlobalPopup/>
       </ThemeProvider>
     </Provider>
   );

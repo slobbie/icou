@@ -13,6 +13,9 @@ import TodoCards from '../components/TodoCard';
 import addIcon from '@assets/icon/addIcon.png';
 import SetToDoItem from '../components/SetToDoItem';
 import UpdateToItem from '../components/UpdateToItem';
+import { View } from 'react-native';
+import { Text } from 'react-native-svg';
+import GlobalPopupController from '@common/components/popup/GlobalPopupController';
 
 // 홈스크린
 const HomeScreen = () => {
@@ -26,6 +29,7 @@ const HomeScreen = () => {
 
   const [isBottomSheet, setIsBottomSheet] = useState<boolean>(false);
   const [isUpdateBottomSheet, setUpdateIsBottomSheet] = useState<boolean>(false);
+
 
   // const [count, setCount] = useState(0)us
 
@@ -67,7 +71,9 @@ const HomeScreen = () => {
 
   // 투두 리스트 추가
   const setTodo = () => {
-    setIsBottomSheet((prev) => !prev)
+    console.log('실행')
+    // popup.showModal('modal', '', <View><Text>이게 되나?</Text></View>)
+    GlobalPopupController.showModal('modal', '', <View><Text>이게 되나?</Text></View>)
   }
 
   const TASKS = routines.map((title, index) => ({ title, index }));

@@ -1,17 +1,24 @@
-import React from 'react'
+import React, { Dispatch } from 'react'
 import styled from 'styled-components/native'
 
 interface ModalComponentInterface {
+  visible?: boolean
+  setVisible?: Dispatch<boolean>,
   children?: React.ReactNode
 }
 
 // 모달
-const ModalComponent = ({children}: ModalComponentInterface) => {
+const ModalComponent = ({
+  visible, children, setVisible
+}: ModalComponentInterface) => {
   return (
     <Modal
       animationType='fade'
       transparent={true}
-      visible={true}
+      visible={visible}
+      onRequestClose={() => {
+        setVisible(false)
+      }}
     >
       <CenteredView>
         <ModalView>
