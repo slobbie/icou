@@ -71,23 +71,23 @@ ${props =>
   ${(props) =>
     props.disabled ?
       css`
-    background-color: #eee;
-    color: #8c8c8c;
+    background-color: ${({theme}) => theme.colors.gray_eee};
+    color: ${({theme}) => theme.colors.gray_8c8c8c};
     `
       :
       css`
-    background-color: #0066FF;
-    color: #fff;
+    background-color: ${({theme}) => theme.colors.btn_0066ff};
+    color: ${({theme}) => theme.colors.white_fff};
   `}
 `
 
 
 const Pressable = styled.Pressable<commonButtonProps>`
   border-radius: 5px;
-  background-color: #0066FF;
+  background-color: ${({theme}) => theme.colors.btn_0066ff};
   align-items: center;
   justify-content: center;
-  color: #eee;
+  color: ${({theme}) => theme.colors.gray_eee};
   border-radius: 5px;
   ${sizeStyles};
 `
@@ -101,12 +101,12 @@ const Text = styled.Text<commonButtonProps>`
   ${(props) =>
     props.disabled ?
       css`
-      color: #8c8c8c;
-      border-color: #E5E5E5;
+      color: ${({theme}) => theme.colors.gray_8c8c8c};
+      border-color: ${({theme}) => theme.colors.gray_e5e5e5};
     `
       :
       css`
-      color: #fff;
+      color: ${({theme}) => theme.colors.white_fff};
       border-color: #E5E5E5;
     `
 }

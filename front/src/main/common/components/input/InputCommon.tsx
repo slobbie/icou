@@ -34,8 +34,8 @@ export default InputCommon
 const CustomInput = styled.TextInput<InputCommonInterface>`
   width: 100%;
   height: 50px;
-  color: #fff;
-  background-color: #3B3B3E;
+  color: ${({theme}) => theme.colors.white_fff};
+  background-color: ${({theme}) => theme.colors.bg_3b3b3e};
   padding: 13px 15px;
   font-size: 13px;
   text-decoration: none;

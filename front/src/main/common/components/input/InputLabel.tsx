@@ -29,7 +29,7 @@ const TopArea = styled.View`
   margin-bottom: 10px;
 `
 const TopText = styled.Text`
-  color: #fff;
+  color: ${({theme}) => theme.colors.white_fff};
   font-weight: 400;
   font-size: 16px;
 `

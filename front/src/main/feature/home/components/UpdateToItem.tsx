@@ -68,7 +68,7 @@ const Space = styled.View`
 
 const Title = styled.Text`
     font-size: 16px;
-    color: #fff;
+    color: ${({theme}) => theme.colors.white_fff};
 `
 const Bottom = styled.View`
   align-items: center;
