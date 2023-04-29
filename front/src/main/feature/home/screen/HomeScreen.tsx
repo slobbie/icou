@@ -12,6 +12,7 @@ import routineSlice from '../slice/routine';
 import TodoCards from '../components/TodoCard';
 import addIcon from '@assets/icon/addIcon.png';
 import SetToDoItem from '../components/SetToDoItem';
+import UpdateToItem from '../components/UpdateToItem';
 
 // 홈스크린
 const HomeScreen = () => {
@@ -24,6 +25,7 @@ const HomeScreen = () => {
   // const fivePriority = useSharedValue(0.6);
 
   const [isBottomSheet, setIsBottomSheet] = useState<boolean>(false);
+  const [isUpdateBottomSheet, setUpdateIsBottomSheet] = useState<boolean>(false);
 
   // const [count, setCount] = useState(0)us
 
@@ -87,6 +89,13 @@ const HomeScreen = () => {
     reRenderTodo()
   }, [reRenderTodo]);
 
+  const ex =[
+    {'bgColor': "#00FF00", "id": 0, "title": "ㄴㅇㄴㅇㄴㅇㄴ"},
+    {'bgColor': "#00FF00", "id": 1, "title": "ㄴㅇㄴㅇㄴㅇㄴ"},
+    {'bgColor': "#00FF00", "id": 2, "title": "ㄴㅇㄴㅇㄴㅇㄴ"}
+  ]
+
+  console.log(ex.find((item) => item.id === 2))
 
   return (
     <>
@@ -125,6 +134,7 @@ const HomeScreen = () => {
                   simultaneousHandlers={scrollRef}
                   task={item.title}
                   onDismiss={onDismiss}
+                  setUpdateIsBottomSheet={setUpdateIsBottomSheet}
                 />
               )
             })}
@@ -136,6 +146,14 @@ const HomeScreen = () => {
           </Bottom>
         </RooView>
       </Container>
+      <BottomSheet
+        modalVisible={isUpdateBottomSheet}
+        setModalVisible={setUpdateIsBottomSheet}
+      >
+        <UpdateToItem setUpdateIsBottomSheet={setUpdateIsBottomSheet} />
+        {/* <SetToDoItem setIsBottomSheet={setIsBottomSheet}/> */}
+      </BottomSheet>
+
       <BottomSheet
         modalVisible={isBottomSheet}
         setModalVisible={setIsBottomSheet}

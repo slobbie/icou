@@ -26,10 +26,10 @@ const Container = styled.View`
 
 const TopArea = styled.View`
   flex-direction: row;
+  margin-bottom: 10px;
 `
 const TopText = styled.Text`
   color: #fff;
   font-weight: 400;
-  font-size: 14px;
-  margin-bottom: 5px;
+  font-size: 16px;
 `

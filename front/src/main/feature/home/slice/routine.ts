@@ -9,10 +9,12 @@ export interface routineItemInterface {
 
 interface routinesInterface {
   routines: routineItemInterface[];
+  getTodoItem: routineItemInterface[]
 }
 
 const initialState: routinesInterface = {
-  routines: []
+  routines: [],
+  getTodoItem: []
 };
 
 const routineSlice = createSlice({
@@ -20,7 +22,15 @@ const routineSlice = createSlice({
   initialState,
   reducers: {
     setRoutine (state, action: PayloadAction<routineItemInterface>) {
-      console.log('정해석  action.payload', action.payload);
+      state.routines.push(action.payload)
+    },
+    getTodoId (state, action: PayloadAction<number>) {
+      const result = state.routines.filter((item) => {return item.id === action.payload})
+      state.getTodoItem.push(result[0])
+    },
+    updateTodoItem (state, action: PayloadAction<routineItemInterface>) {
+      const filterItem = state.routines.filter((item) => item.id !== action.payload.id)
+      state.routines = filterItem
       state.routines.push(action.payload)
     },
     deleteTodo (state, action: PayloadAction<number>) {

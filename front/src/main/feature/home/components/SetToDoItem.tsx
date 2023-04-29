@@ -16,10 +16,10 @@ const SetToDoItem = ({setIsBottomSheet}: SetToDoItemInterface) => {
   const dispatch = useDispatch();
   let nextId = useRef(0)
 
-  const [text, setText] = useState('')
+  const [todo, setTodo] = useState('')
 
   const onChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
-    setText(e.nativeEvent.text.trim())
+    setTodo(e.nativeEvent.text.trim())
   }
 
   // 파스텔 색상을 랜덤하게 선택하는 함수
@@ -29,14 +29,13 @@ const SetToDoItem = ({setIsBottomSheet}: SetToDoItemInterface) => {
     return pastelColors[randomIndex];
   }
 
-  // 사용 예시
   const new_color = generateRandomPastelColor()
 
-  const setTodo = () => {
+  const setTodoItem = () => {
     setIsBottomSheet((prev) => !prev)
     dispatch(routineSlice.actions.setRoutine({
       id: nextId.current,
-      title: text,
+      title: todo,
       bgColor: new_color
     }))
     nextId.current += 1
@@ -50,7 +49,8 @@ const SetToDoItem = ({setIsBottomSheet}: SetToDoItemInterface) => {
       <Bottom>
         <ButtonCommon
           size="M"
-          onPress={setTodo}
+          disabled={!todo}
+          onPress={setTodoItem}
           label={'등록하기'}
         />
       </Bottom>
