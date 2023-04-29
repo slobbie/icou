@@ -151,44 +151,44 @@ const TodoCard = styled(Animated.View)<{bgColor: string}>`
 const TodoCol = styled.View`
   width: 100%;
   height: 100%;
-  border: 1px solid #fff;
+  border: 1px solid ${({theme}) => theme.colors.white_fff};
 `
 
 const TodoRow = styled.View`
   margin-bottom: 5px;
   width: 100%;
   height: 30px;
-  border: 1px solid #fff;
+  border: 1px solid ${({theme}) => theme.colors.white_fff};
   flex-direction: row;
   justify-content: space-between;
 `
 
 const TodoTitleRow = styled.View`
 `
+
 const TodoCountRow = styled.View`
-
-  border: 1px solid #fff;
+  border: 1px solid ${({theme}) => theme.colors.white_fff};
 `
 
-const TodoCountText = styled.Text`
-  font-size: 16px;
-  font-weight: bold;
-  color: #fff;
-`
+// const TodoCountText = styled.Text`
+//   font-size: 16px;
+//   font-weight: bold;
+//   color: #fff;
+// `
 
 const TodoTitle = styled.Text`
   font-size: 16px;
-  color: #fff;
+  color: ${({theme}) => theme.colors.white_fff};
   font-weight: bold;
   width: 100%;
 `
 
-const TodoTime  = styled.Text`
-  font-size: 12px;
-  color: #fff;
-  font-weight: bold;
-  width: 100%;
-`
+// const TodoTime  = styled.Text`
+//   font-size: 12px;
+//   color: ${({theme}) => theme.colors.white_fff};
+//   font-weight: bold;
+//   width: 100%;
+// `
 
 const IconBox = styled(Animated.View)`
   height: ${LIST_ITEM_HEIGHT}px;

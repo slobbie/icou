@@ -89,13 +89,6 @@ const HomeScreen = () => {
     reRenderTodo()
   }, [reRenderTodo]);
 
-  const ex =[
-    {'bgColor': "#00FF00", "id": 0, "title": "ㄴㅇㄴㅇㄴㅇㄴ"},
-    {'bgColor': "#00FF00", "id": 1, "title": "ㄴㅇㄴㅇㄴㅇㄴ"},
-    {'bgColor': "#00FF00", "id": 2, "title": "ㄴㅇㄴㅇㄴㅇㄴ"}
-  ]
-
-  console.log(ex.find((item) => item.id === 2))
 
   return (
     <>
@@ -169,24 +162,24 @@ export default HomeScreen;
 const Container = styled.View`
   flex: 1;
   align-items: center;
-  background-color: #141515;
+  background-color: ${({theme}) => theme.colors.bg_141515};
 `;
 
 
 const LogBox = styled.View`
-  background-color: #141515;
+  background-color: ${({theme}) => theme.colors.bg_141515};
   align-items: center;
   justify-content: center;
   height: 200px;
 `
 
 const Log = styled.Text`
-  color: #fff;
+  color: ${({theme}) => theme.colors.white_fff};
   font-size: 22px;
 `
 
 const LogSmall = styled.Text`
-  color: #fff;
+  color: ${({theme}) => theme.colors.white_fff};
   font-size: 16px;
   opacity: 0.6;
 `

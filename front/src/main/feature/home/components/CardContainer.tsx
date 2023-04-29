@@ -215,12 +215,12 @@ const Box = styled.View`
 
 const Title = styled.Text`
   font-size: 24px;
-  color: #fff;
+  color: ${({theme}) => theme.colors.white_fff};
 `;
 
 const Dec = styled.Text`
   margin-top: 10px;
-  color: #fff;
+  color: ${({theme}) => theme.colors.white_fff};
   font-size: 20px;
 `;
 

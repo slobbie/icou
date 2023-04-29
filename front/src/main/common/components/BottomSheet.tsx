@@ -97,7 +97,7 @@ export default BottomSheet;
 const ViewBox = styled.View`
   justify-content: flex-start;
   align-items: center;
-  background-color: #1F2021;
+  background-color: ${({theme}) => theme.colors.bg_1F2021};
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
   overflow: hidden;
