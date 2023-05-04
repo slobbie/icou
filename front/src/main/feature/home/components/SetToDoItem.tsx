@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useRef, useState } from 'react'
+import React, {useRef, useState } from 'react'
 import styled from 'styled-components/native'
 // import addIcon from '@assets/icon/addIcon.png';
 import { useDispatch } from 'react-redux';
@@ -6,13 +6,11 @@ import routineSlice from '../slice/routine';
 import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import InputLabel from 'main/common/components/input/InputLabel';
 import ButtonCommon from 'main/common/components/button/ButtonCommon';
+import GlobalPopupController from 'main/common/components/popup/GlobalPopupController';
 
-interface SetToDoItemInterface {
-    setIsBottomSheet: Dispatch<SetStateAction<boolean>>
-}
 
 // 투두 리스트 등록
-const SetToDoItem = ({setIsBottomSheet}: SetToDoItemInterface) => {
+const SetToDoItem = () => {
   const dispatch = useDispatch();
   let nextId = useRef(0)
 
@@ -32,13 +30,13 @@ const SetToDoItem = ({setIsBottomSheet}: SetToDoItemInterface) => {
   const new_color = generateRandomPastelColor()
 
   const setTodoItem = () => {
-    setIsBottomSheet((prev) => !prev)
     dispatch(routineSlice.actions.setRoutine({
       id: nextId.current,
       title: todo,
       bgColor: new_color
     }))
     nextId.current += 1
+    GlobalPopupController.hideModal()
   }
 
   return (

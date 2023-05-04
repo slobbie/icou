@@ -6,15 +6,12 @@ import styled from 'styled-components/native';
 // import {useSharedValue} from 'react-native-reanimated';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '@store/reducer';
-import BottomSheet from '@common/components/BottomSheet';
 // import { chatGPT} from '../api/recommendations';
 import routineSlice from '../slice/routine';
 import TodoCards from '../components/TodoCard';
 import addIcon from '@assets/icon/addIcon.png';
 import SetToDoItem from '../components/SetToDoItem';
 import UpdateToItem from '../components/UpdateToItem';
-import { View } from 'react-native';
-import { Text } from 'react-native-svg';
 import GlobalPopupController from '@common/components/popup/GlobalPopupController';
 
 // 홈스크린
@@ -26,9 +23,6 @@ const HomeScreen = () => {
   // const thirdPriority = useSharedValue(0.8);
   // const fourPriority = useSharedValue(0.7);
   // const fivePriority = useSharedValue(0.6);
-
-  const [isBottomSheet, setIsBottomSheet] = useState<boolean>(false);
-  const [isUpdateBottomSheet, setUpdateIsBottomSheet] = useState<boolean>(false);
 
 
   // const [count, setCount] = useState(0)us
@@ -69,14 +63,21 @@ const HomeScreen = () => {
     index?: number;
   }
 
-  // 투두 리스트 추가
-  const setTodo = () => {
-    console.log('실행')
-    // popup.showModal('modal', '', <View><Text>이게 되나?</Text></View>)
-    GlobalPopupController.showModal('modal', '', <View><Text>이게 되나?</Text></View>)
+  type eventType = 'set' | 'update'
+
+  // set / update todo handler
+  const todoHandler = (eventType: eventType) => {
+    GlobalPopupController.showModal('bottomSheet', '',
+      eventType === 'set' ?
+        <SetToDoItem />
+        :
+        <UpdateToItem />
+    )
   }
 
   const TASKS = routines.map((title, index) => ({ title, index }));
+
+  console.log('정해석', TASKS)
 
   const [tasks, setTasks] = useState(TASKS)
 
@@ -133,32 +134,18 @@ const HomeScreen = () => {
                   simultaneousHandlers={scrollRef}
                   task={item.title}
                   onDismiss={onDismiss}
-                  setUpdateIsBottomSheet={setUpdateIsBottomSheet}
+                  setUpdateIsBottomSheet={() => todoHandler('update')}
                 />
               )
             })}
           </ScrollViewBox>
           <Bottom>
-            <AddButton onPress={setTodo}>
+            <AddButton onPress={() => todoHandler('set')}>
               <AddIcon source={addIcon} />
             </AddButton>
           </Bottom>
         </RooView>
       </Container>
-      <BottomSheet
-        modalVisible={isUpdateBottomSheet}
-        setModalVisible={setUpdateIsBottomSheet}
-      >
-        <UpdateToItem setUpdateIsBottomSheet={setUpdateIsBottomSheet} />
-        {/* <SetToDoItem setIsBottomSheet={setIsBottomSheet}/> */}
-      </BottomSheet>
-
-      <BottomSheet
-        modalVisible={isBottomSheet}
-        setModalVisible={setIsBottomSheet}
-      >
-        <SetToDoItem setIsBottomSheet={setIsBottomSheet}/>
-      </BottomSheet>
     </>
   );
 };

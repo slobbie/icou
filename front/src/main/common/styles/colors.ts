@@ -8,6 +8,8 @@ const colors = {
 
   white_fff: '#fff',
 
+  black_000: '#000',
+
   gray_eee: '#eee',
   gray_e5e5e5: '#eee',
   gray_8c8c8c: '#8c8c8c',

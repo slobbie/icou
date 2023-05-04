@@ -1,18 +1,16 @@
 import ButtonCommon from 'main/common/components/button/ButtonCommon'
 import InputLabel from 'main/common/components/input/InputLabel'
-import React, {Dispatch, SetStateAction, useState} from 'react'
+import React, {useState} from 'react'
 import {NativeSyntheticEvent, TextInputChangeEventData} from 'react-native'
 import {useDispatch, useSelector} from 'react-redux'
 import {RootState} from 'redux/store/reducer'
 import styled from 'styled-components/native'
 import routineSlice from '@feature/home/slice/routine'
+import GlobalPopupController from '@common/components/popup/GlobalPopupController'
 
-interface UpdateToItemInterface {
-  setUpdateIsBottomSheet: Dispatch<SetStateAction<boolean>>
-}
 
 // 투두 리스트 수정
-const UpdateToItem = ({setUpdateIsBottomSheet}: UpdateToItemInterface) => {
+const UpdateToItem = () => {
   const [todo, setTodo] = useState('')
   const getTodoItem = useSelector((state: RootState) => state.routine.getTodoItem[0])
   const dispatch = useDispatch()
@@ -22,12 +20,12 @@ const UpdateToItem = ({setUpdateIsBottomSheet}: UpdateToItemInterface) => {
   }
 
   const updateTodoItem = (title: string) => {
-    setUpdateIsBottomSheet((prev) => !prev)
     dispatch(routineSlice.actions.updateTodoItem({
       id: getTodoItem.id,
       title: title,
       bgColor: getTodoItem.bgColor
     }))
+    GlobalPopupController.hideModal()
   }
 
   return (

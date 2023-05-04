@@ -3,13 +3,16 @@ import React, {MutableRefObject} from 'react'
 export type CustomPopupRef = {
   show: (message: string) => void
   hide: () => void
-  getType: (type: alertType) => void
+  getType: (type: alertTypes | modalTypes | alarmTypes) => void
   getHandler: (handler?:  handlerType) => void
   getCancelHandler: (handler?:  handlerType) => void
   getChildren: (children?: React.ReactNode) => void
 }
 
-export type alertType = 'alert' | 'confirm' | 'modal' | 'permission' | 'toastPopup' | 'loading'
+export type alertTypes = 'alert' | 'confirm'
+export type modalTypes = 'modal' | 'bottomSheet'
+export type alarmTypes = 'permission' | 'toastPopup'
+
 export type handlerType = Function
 
 export default class GlobalPopupController {
@@ -19,17 +22,22 @@ export default class GlobalPopupController {
       this.modalRef = ref
     }
 
-    static showAlert = (type: alertType, message: string, handler?:  handlerType, cancelHandler?:  handlerType) => {
+    static showAlert = (type: alertTypes, message: string, handler?:  handlerType, cancelHandler?:  handlerType) => {
       this.modalRef.current?.getType(type)
       this.modalRef.current?.show(message)
       this.modalRef.current?.getHandler(handler)
       this.modalRef.current?.getCancelHandler(cancelHandler)
     }
 
-    static showModal = (type: alertType, message: string, children: React.ReactNode) => {
+    static showModal = (type: modalTypes, message: string, children: React.ReactNode) => {
       this.modalRef.current?.getType(type)
       this.modalRef.current?.show(message)
       this.modalRef.current?.getChildren(children)
+    }
+
+    static showAlarm = (type: modalTypes, message: string) => {
+      this.modalRef.current?.getType(type)
+      this.modalRef.current?.show(message)
     }
 
     static hideModal = () => {
@@ -37,43 +45,3 @@ export default class GlobalPopupController {
     }
 
 }
-
-
-// const usePopupController = (ref?: any) => {
-//   let modalRef = useRef<CustomPopupRef>(null);
-
-//   const setPopupRef = () => {
-//     modalRef = ref
-//     console.log('정해석 modalRef', modalRef)
-//   }
-
-//   const showAlert = (
-//     type: alertType,
-//     message: string,
-//     handler?: handlerType,
-//     cancelHandler?: handlerType,
-//   ) => {
-//     modalRef.current?.getType(type);
-//     modalRef.current?.show(message);
-//     modalRef.current?.getHandler(handler);
-//     modalRef.current?.getCancelHandler(cancelHandler);
-//   };
-
-//   const showModal = (
-//     type: alertType,
-//     message: string,
-//     children: React.ReactNode,
-//   ) => {
-//     modalRef.current?.getType(type);
-//     modalRef.current?.show(message);
-//     modalRef.current?.getChildren(children);
-//   };
-
-//   const hideModal = () => {
-//     modalRef.current?.hide();
-//   };
-
-//   return { modalRef, setPopupRef, showAlert, showModal, hideModal };
-// };
-
-// export default usePopupController;

@@ -2,7 +2,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {forwardRef, useImperativeHandle, useLayoutEffect, useRef, useState} from 'react'
 import ModalComponent from '../Modal'
-import GlobalPopupController, { CustomPopupRef, alertType, handlerType } from './GlobalPopupController'
+import GlobalPopupController, { CustomPopupRef, alarmTypes, alertTypes, handlerType, modalTypes } from './GlobalPopupController'
+import BottomSheet from '../BottomSheet'
+import AlertComponent from './AlertComponent'
+import AlertConfirmComponent from './AlertConfirmComponent'
 
 
 const useGlobalPopup = () => {
@@ -41,7 +44,7 @@ const useGlobalPopup = () => {
       /**
       * @description show popup type
       */
-      getType: (type: alertType) => {
+      getType: (type: alertTypes | modalTypes | alarmTypes) => {
         setAlertType(type)
       },
       /**
@@ -83,18 +86,42 @@ const useGlobalPopup = () => {
   }
 
   const RenderValue = {
+    alert: <AlertComponent
+      content={customMessage}
+      confirmEvent={confirmClick}
+      visible={modalVisible}
+      setVisible={setModalVisible}
+    />,
+    alertConfirm: <AlertConfirmComponent
+      content={customMessage}
+      confirmEvent={confirmClick}
+      cancelEvent={cancelClick}
+      visible={modalVisible}
+      setVisible={setModalVisible}
+    />,
     modal: <ModalComponent
       visible={modalVisible}
       setVisible={setModalVisible}
     />,
+    bottomSheet: <BottomSheet
+      visible={modalVisible}
+      setVisible={setModalVisible}
+      children={modalChildren}
+    />
   }
 
   const Component = () => {
     // return modalVisible ? RenderValue[alertType] : null
 
     switch (alertType) {
+      case 'alert':
+        return modalVisible ? RenderValue.alert : null
+      case 'confirm':
+        return modalVisible ? RenderValue.alertConfirm : null
       case 'modal':
         return modalVisible ? RenderValue.modal : null
+      case 'bottomSheet':
+        return modalVisible ? RenderValue.bottomSheet : null
       default:
         break
     }
