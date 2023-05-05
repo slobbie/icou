@@ -11,7 +11,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={appTheme}>
-        <StatusBar barStyle="default" />
+        <StatusBar barStyle="light-content" />
         <StackNavigation />
         <GlobalPopup/>
       </ThemeProvider>
