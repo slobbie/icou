@@ -3,10 +3,10 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '@feature/home/screen/HomeScreen';
 import DashBoardScreen from '@feature/dashboard/screen/DashBoardScreen';
 import SettingScreen from '@feature/setting/SettingScreen';
-// import AnimatedTabBar from '@navigation/components/AnimatedTabBar';
-import SvgIcon from 'main/common/components/svgIcon/SvgIcon';
+import SvgIcon from '@common/components/svgIcon/SvgIcon';
 
-const BottomTabNavigation = () => {
+// 탭 네비게이션
+const TabNavigation = () => {
   const Tab = createBottomTabNavigator();
 
   return (
@@ -16,7 +16,7 @@ const BottomTabNavigation = () => {
         headerTitleAlign: 'center',
         headerTitleStyle: {
           fontStyle: 'normal',
-          fontSize: 18,
+          fontSize: 24,
           fontWeight: '400',
           lineHeight: 22,
           color: '#fff',
@@ -36,7 +36,7 @@ const BottomTabNavigation = () => {
         },
       }}
     >
-
+      {/* 대시보드 스크린 */}
       <Tab.Screen
         name="DashBoard"
         component={DashBoardScreen}
@@ -55,6 +55,7 @@ const BottomTabNavigation = () => {
           ),
         }}
       />
+      {/* 홈 스크린  */}
       <Tab.Screen
         name="Home"
         component={HomeScreen}
@@ -74,6 +75,7 @@ const BottomTabNavigation = () => {
           }
         }}
       />
+      {/* 설정 스크린 */}
       <Tab.Screen
         name="Setting"
         component={SettingScreen}
@@ -94,4 +96,4 @@ const BottomTabNavigation = () => {
   );
 };
 
-export default BottomTabNavigation;
+export default TabNavigation;

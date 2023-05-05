@@ -4,12 +4,12 @@ import { PanGestureHandler, PanGestureHandlerGestureEvent, PanGestureHandlerProp
 import Animated, { runOnJS, useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import styled from 'styled-components/native'
 import DeleteIcon from '@assets/icon/delete.png'
-import SvgIcon from 'main/common/components/svgIcon/SvgIcon';
+import SvgIcon from '@common/components/svgIcon/SvgIcon';
 import { useDispatch } from 'react-redux';
-import routineSlice, { routineItemInterface } from '../slice/routine';
-// import EditIconIcon from '@assets/icon/edit.svg'
+import routineSlice, { todoItemInterface } from '@feature/home/slice/todoSlice';
+import { eventType } from '@feature/home/interface/home.interface';
 
-interface TaskInterface {
+interface todoInterface {
   title?: string;
   bgColor?: string
   id?: number;
@@ -17,9 +17,9 @@ interface TaskInterface {
 
 interface ListItemProps
   extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'> {
-  task?: TaskInterface
-  onDismiss?: (task?: TaskInterface) => void;
-  setUpdateIsBottomSheet?: Dispatch<SetStateAction<boolean>>
+  todos?: todoInterface
+  onDismiss?: (todos?: todoInterface) => void;
+  setUpdateIsBottomSheet?: (eventType: eventType) => void;
 }
 
 const LIST_ITEM_HEIGHT = 100;
@@ -29,7 +29,7 @@ const TRANSLATE_X_THRESHOLD = -SCREEN_WIDTH * 0.3;
 
 // 투두 리스트 카드
 const TodoCards = ({
-  task,
+  todos,
   onDismiss,
   simultaneousHandlers,
   setUpdateIsBottomSheet
@@ -42,7 +42,7 @@ const TodoCards = ({
   const marginVertical = useSharedValue(20);
   const opacity1 = useSharedValue(1);
 
-
+  /** 투두 카드 제스처 이벤트 */
   const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
     onActive: (event) => {
       translateX.value = event.translationX;
@@ -55,7 +55,7 @@ const TodoCards = ({
         marginVertical.value = withTiming(0);
         opacity1.value = withTiming(0, undefined, (isFinished) => {
           if (isFinished && onDismiss) {
-            runOnJS(onDismiss)(task);
+            runOnJS(onDismiss)(todos);
           }
         });
       } else {
@@ -64,6 +64,7 @@ const TodoCards = ({
     },
   });
 
+  /** 투두 translateX 애니메이션 스타일 */
   const rStyle = useAnimatedStyle(() => ({
     transform: [
       {
@@ -72,6 +73,7 @@ const TodoCards = ({
     ],
   }));
 
+  /** 투두 icon 애니메이션 스타일 */
   const rIconContainerStyle = useAnimatedStyle(() => {
     const opacity = withTiming(
       translateX.value < TRANSLATE_X_THRESHOLD ? 1 : 0
@@ -79,7 +81,8 @@ const TodoCards = ({
     return { opacity };
   });
 
-  const rTaskContainerStyle = useAnimatedStyle(() => {
+   /** 투두 컨테이너 애니메이션 스타일 */
+  const rTodoContainerStyle = useAnimatedStyle(() => {
     return {
       height: itemHeight.value,
       marginVertical: marginVertical.value,
@@ -87,17 +90,19 @@ const TodoCards = ({
     };
   });
 
-  const showBottomSheet = (pItem: routineItemInterface) => {
+
+  /** 투두 아이템 수정 바텀시트 호출 이벤트 */
+  const showUpdateTodoBottomSheet = (pItem: todoItemInterface) => {
     dispatch(routineSlice.actions.getTodoItem({
       id: pItem.id,
       title: pItem.title,
       bgColor: pItem.bgColor
     }))
-    setUpdateIsBottomSheet((prev) => !prev)
+    setUpdateIsBottomSheet('update')
   }
 
   return (
-    <TodoContainer style={rTaskContainerStyle}>
+    <TodoContainer style={rTodoContainerStyle}>
       <IconBox style={rIconContainerStyle}>
         <Icon
           source={DeleteIcon}
@@ -108,17 +113,17 @@ const TodoCards = ({
         onGestureEvent={panGesture}
       >
         <TodoCard
-          bgColor={task.bgColor}
+          bgColor={todos.bgColor}
           style={rStyle}
         >
           <TodoCol>
             <TodoRow>
               <TodoTitleRow>
-                <TodoTitle>{task.title}</TodoTitle>
+                <TodoTitle>{todos.title}</TodoTitle>
               </TodoTitleRow>
               <TodoCountRow>
                 <EditButton
-                  onPress={() => showBottomSheet(task)}
+                  onPress={() => showUpdateTodoBottomSheet(todos)}
                 >
                   <SvgIcon name="edit" size={24} />
                 </EditButton>
@@ -154,14 +159,14 @@ const TodoCard = styled(Animated.View)<{bgColor: string}>`
 const TodoCol = styled.View`
   width: 100%;
   height: 100%;
-  border: 1px solid ${({theme}) => theme.colors.white_fff};
+  /* border: 1px solid ${({theme}) => theme.colors.white_fff}; */
 `
 
 const TodoRow = styled.View`
   margin-bottom: 5px;
   width: 100%;
   height: 30px;
-  border: 1px solid ${({theme}) => theme.colors.white_fff};
+  /* border: 1px solid ${({theme}) => theme.colors.white_fff}; */
   flex-direction: row;
   justify-content: space-between;
 `
@@ -170,7 +175,7 @@ const TodoTitleRow = styled.View`
 `
 
 const TodoCountRow = styled.View`
-  border: 1px solid ${({theme}) => theme.colors.white_fff};
+  /* border: 1px solid ${({theme}) => theme.colors.white_fff}; */
 `
 
 // const TodoCountText = styled.Text`
@@ -181,7 +186,7 @@ const TodoCountRow = styled.View`
 
 const TodoTitle = styled.Text`
   font-size: 16px;
-  color: ${({theme}) => theme.colors.white_fff};
+  color: ${({theme}) => theme.colors.black_000};
   font-weight: bold;
   width: 100%;
 `

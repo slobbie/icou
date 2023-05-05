@@ -1,32 +1,38 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {GestureHandlerRootView, ScrollView} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
-// import {Colors} from '@feature/home/util/colors';
-// import CardContainer from '@feature/home/components/CardContainer';
-// import {useSharedValue} from 'react-native-reanimated';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '@store/reducer';
-// import { chatGPT} from '../api/recommendations';
-import routineSlice from '../slice/routine';
-import TodoCards from '../components/TodoCard';
+import TodoCard from '@feature/home/components/TodoCard';
 import addIcon from '@assets/icon/addIcon.png';
-import SetToDoItem from '../components/SetToDoItem';
-import UpdateToItem from '../components/UpdateToItem';
+import SetToDoItem from '@feature/home/components/SetToDoItem';
+import UpdateToItem from '@feature/home/components/UpdateToItem';
 import GlobalPopupController from '@common/components/popup/GlobalPopupController';
+import { TodoInterface, eventType } from '@feature/home/interface/home.interface';
+import todoSlice from '@feature/home/slice/todoSlice';
 
 // 홈스크린
 const HomeScreen = () => {
   const dispatch = useDispatch();
-  const routines = useSelector((state: RootState) => state.routine.routines);
 
+  // 스크롤뷰 ref
+  const scrollRef = useRef(null);
+
+  // 저장된 todo list
+  const routines = useSelector((state: RootState) => state.todo.todoList);
+
+  const TASKS = routines.map((title, index) => ({ title, index }));
+  // 투두리스트 상태
+  const [tasks, setTasks] = useState(TASKS)
+
+
+  // TODO: dashboard 로 이동 예정
   // const firstPriority = useSharedValue(1);
   // const secondPriority = useSharedValue(0.9);
   // const thirdPriority = useSharedValue(0.8);
   // const fourPriority = useSharedValue(0.7);
   // const fivePriority = useSharedValue(0.6);
 
-
-  // const [count, setCount] = useState(0)us
 
 
   // 루틴 호출
@@ -48,7 +54,7 @@ const HomeScreen = () => {
   //   }
   // }, [dispatch]);
 
-
+// TODO: dashboard 로 이동 예정
   // color 와 priority 배열
   // const priorityArray = [
   //   {priority: fivePriority, color: Colors.DARK_RED},
@@ -58,16 +64,9 @@ const HomeScreen = () => {
   //   {priority: firstPriority, color: Colors.LIGHT_GOLD},
   // ];
 
-  interface TaskInterface {
-    id?: number
-    title?: string;
-    index?: number;
-  }
 
-  type eventType = 'set' | 'update'
-
-  // set / update todo handler
-  const todoHandler = (eventType: eventType) => {
+  /** set / update 바텀 시트 호출 */
+  const showBottomSheetHandler = (eventType: eventType) => {
     GlobalPopupController.showModal('bottomSheet', '',
       eventType === 'set' ?
         <SetToDoItem />
@@ -76,21 +75,18 @@ const HomeScreen = () => {
     )
   }
 
-  const TASKS = routines.map((title, index) => ({ title, index }));
-
-  const [tasks, setTasks] = useState(TASKS)
-
-  const onDismiss = useCallback((items: TaskInterface) => {
+  /** 투두 삭제 이벤트 */
+  const onDismiss = useCallback((items: TodoInterface) => {
     setTasks((prevTasks) => prevTasks.filter((item) => item.index !== items.index));
-    dispatch(routineSlice.actions.deleteTodo(items.id))
+    dispatch(todoSlice.actions.deleteTodo(items.id))
   }, [dispatch]);
 
-  const scrollRef = useRef(null);
-
+  /** 투두 리스트가 변경될시 호출 */
   const reRenderTodo = useCallback(() => {
     setTasks([...routines.map((title, index) => ({ title, index }))]);
   }, [routines])
 
+  /** 투두리스트 재 랜더링 */
   useEffect(() => {
     reRenderTodo()
   }, [reRenderTodo]);
@@ -100,6 +96,7 @@ const HomeScreen = () => {
     <>
       <Container>
         <RooView>
+        {/* // TODO: dashboard 로 이동 예정 */}
           {/* <Container> */}
           {/* <>
               {routines.map((routine, i) => (
@@ -128,18 +125,18 @@ const HomeScreen = () => {
           <ScrollViewBox>
             {tasks.map((item) => {
               return (
-                <TodoCards
+                <TodoCard
                   key={item.index}
                   simultaneousHandlers={scrollRef}
-                  task={item.title}
+                  todos={item.title}
                   onDismiss={onDismiss}
-                  setUpdateIsBottomSheet={() => todoHandler('update')}
+                  setUpdateIsBottomSheet={() => showBottomSheetHandler('update')}
                 />
               )
             })}
           </ScrollViewBox>
           <Bottom>
-            <AddButton onPress={() => todoHandler('set')}>
+            <AddButton onPress={() => showBottomSheetHandler('set')}>
               <AddIcon source={addIcon} />
             </AddButton>
           </Bottom>

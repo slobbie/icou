@@ -19,9 +19,9 @@ module.exports = {
     // prettier 규칙을 사용 합니다.
     'prettier/prettier': 0,
     // 뒤쪽에 쉼표는 허용하지 않습니다.
-    'comma-dangle': 'off',
+    'comma-dangle': 'on',
     // 세미콜론은 사용하지 않습니다.
-    // semi: ['error', ''],
+    semi: ['error', ''],
     // 공백과 탭을 섞어서 사용하지 말아야 합니다.
     'no-mixed-spaces-and-tabs': 2,
     // 탭 사용 안됨
