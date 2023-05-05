@@ -4,17 +4,18 @@ export interface routineItemInterface {
   id?: number
   title?: string;
   bgColor?: string
-  // dec?: string;
 }
 
 interface routinesInterface {
+  todoId: number
   routines: routineItemInterface[];
-  getTodoItem: routineItemInterface[]
+  getTodoItem: routineItemInterface
 }
 
 const initialState: routinesInterface = {
+  todoId: 0,
   routines: [],
-  getTodoItem: []
+  getTodoItem: {}
 };
 
 const routineSlice = createSlice({
@@ -28,19 +29,24 @@ const routineSlice = createSlice({
       state.routines.push(action.payload)
     },
     /**
-     * @description 선택 투두 항목 Id 얻기
+     * @description 선택 투두 항목  얻기
      */
-    getTodoId (state, action: PayloadAction<number>) {
-      const result = state.routines.filter((item) => {return item.id === action.payload})
-      state.getTodoItem.push(result[0])
+    getTodoItem (state, action: PayloadAction<routineItemInterface>) {
+      state.getTodoItem.id = action.payload.id
+      state.getTodoItem.title = action.payload.title
+      state.getTodoItem.bgColor = action.payload.bgColor
     },
     /**
      * @description 투두 아이템 수정
      */
     updateTodoItem (state, action: PayloadAction<routineItemInterface>) {
-      const filterItem = state.routines.filter((item) => item.id !== action.payload.id)
-      state.routines = filterItem
-      state.routines.push(action.payload)
+      const findItem = state.routines.findIndex((item) => item.id === action.payload.id)
+      state.routines[findItem].id =  action.payload.id
+      state.routines[findItem].title =  action.payload.title
+      state.routines[findItem].bgColor =  action.payload.bgColor
+    },
+    updateTodoId (state, action: PayloadAction<number>) {
+      state.todoId = action.payload
     },
     /**
      * @description 투두 아이템 삭제

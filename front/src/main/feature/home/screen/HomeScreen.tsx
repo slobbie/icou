@@ -18,6 +18,7 @@ import GlobalPopupController from '@common/components/popup/GlobalPopupControlle
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const routines = useSelector((state: RootState) => state.routine.routines);
+
   // const firstPriority = useSharedValue(1);
   // const secondPriority = useSharedValue(0.9);
   // const thirdPriority = useSharedValue(0.8);
@@ -76,8 +77,6 @@ const HomeScreen = () => {
   }
 
   const TASKS = routines.map((title, index) => ({ title, index }));
-
-  console.log('정해석', TASKS)
 
   const [tasks, setTasks] = useState(TASKS)
 
