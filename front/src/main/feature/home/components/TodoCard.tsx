@@ -6,7 +6,7 @@ import styled from 'styled-components/native'
 import DeleteIcon from '@assets/icon/delete.png'
 import SvgIcon from 'main/common/components/svgIcon/SvgIcon';
 import { useDispatch } from 'react-redux';
-import routineSlice from '../slice/routine';
+import routineSlice, { routineItemInterface } from '../slice/routine';
 // import EditIconIcon from '@assets/icon/edit.svg'
 
 interface TaskInterface {
@@ -87,9 +87,12 @@ const TodoCards = ({
     };
   });
 
-  const showBottomSheet = (index: number) => {
-    console.log(index)
-    dispatch(routineSlice.actions.getTodoId(index))
+  const showBottomSheet = (pItem: routineItemInterface) => {
+    dispatch(routineSlice.actions.getTodoItem({
+      id: pItem.id,
+      title: pItem.title,
+      bgColor: pItem.bgColor
+    }))
     setUpdateIsBottomSheet((prev) => !prev)
   }
 
@@ -115,7 +118,7 @@ const TodoCards = ({
               </TodoTitleRow>
               <TodoCountRow>
                 <EditButton
-                  onPress={() => showBottomSheet(task.id)}
+                  onPress={() => showBottomSheet(task)}
                 >
                   <SvgIcon name="edit" size={24} />
                 </EditButton>

@@ -12,7 +12,7 @@ import GlobalPopupController from '@common/components/popup/GlobalPopupControlle
 // 투두 리스트 수정
 const UpdateToItem = () => {
   const [todo, setTodo] = useState('')
-  const getTodoItem = useSelector((state: RootState) => state.routine.getTodoItem[0])
+  const getTodoItem = useSelector((state: RootState) => state.routine.getTodoItem)
   const dispatch = useDispatch()
 
   const onChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
@@ -32,7 +32,7 @@ const UpdateToItem = () => {
     <Container>
       <Title>수정하실 내용을 입력해주세요.</Title>
       <Title>기존 내용</Title>
-      <Title>{getTodoItem?.title}</Title>
+      <Title>{getTodoItem.title}</Title>
       <Space />
       <InputLabel
         topText='수정할 투두'

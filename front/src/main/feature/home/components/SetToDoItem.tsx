@@ -1,24 +1,26 @@
-import React, {useRef, useState } from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components/native'
 // import addIcon from '@assets/icon/addIcon.png';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import routineSlice from '../slice/routine';
 import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import InputLabel from 'main/common/components/input/InputLabel';
 import ButtonCommon from 'main/common/components/button/ButtonCommon';
 import GlobalPopupController from 'main/common/components/popup/GlobalPopupController';
+import { RootState } from 'redux/store/reducer';
 
 
 // 투두 리스트 등록
 const SetToDoItem = () => {
   const dispatch = useDispatch();
-  let nextId = useRef(0)
+  const todoId = useSelector((state: RootState) => state.routine.todoId)
 
   const [todo, setTodo] = useState('')
 
   const onChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
     setTodo(e.nativeEvent.text.trim())
   }
+
 
   // 파스텔 색상을 랜덤하게 선택하는 함수
   const generateRandomPastelColor = (): string => {
@@ -29,15 +31,18 @@ const SetToDoItem = () => {
 
   const new_color = generateRandomPastelColor()
 
+
   const setTodoItem = () => {
     dispatch(routineSlice.actions.setRoutine({
-      id: nextId.current,
+      id: todoId,
       title: todo,
       bgColor: new_color
     }))
-    nextId.current += 1
+    const nextId = todoId + 1
+    dispatch(routineSlice.actions.updateTodoId(nextId))
     GlobalPopupController.hideModal()
   }
+
 
   return (
     <Container>
