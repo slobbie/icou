@@ -43,6 +43,10 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Allow the app to access your calendar events.</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>Allow the app to access your reminders.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

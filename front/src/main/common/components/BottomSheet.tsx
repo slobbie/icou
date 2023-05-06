@@ -6,16 +6,17 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import styled from 'styled-components/native';
+import GlobalPopupController from '@common/components/popup/GlobalPopupController';
 
 interface BottomSheetProps {
   children?: React.ReactNode;
-  modalVisible: boolean;
-  setModalVisible: Dispatch<SetStateAction<boolean>>;
+  visible: boolean;
+  setVisible: Dispatch<SetStateAction<boolean>>;
 }
 
 // 바텀 시트
 const BottomSheet = (props: BottomSheetProps) => {
-  const {modalVisible, setModalVisible} = props;
+  const {visible, setVisible} = props;
   const screenHeight = Dimensions.get('screen').height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
 
@@ -54,24 +55,28 @@ const BottomSheet = (props: BottomSheetProps) => {
   ).current;
 
   useEffect(() => {
-    if (props.modalVisible) {
+    if (props.visible) {
       resetBottomSheet.start();
     }
-  }, [props.modalVisible, resetBottomSheet]);
+  }, [visible, props.visible, resetBottomSheet]);
 
   const onCloseModalHandle = () => {
     closeBottomSheet.start(() => {
-      setModalVisible(false);
+      setVisible(false);
     });
   };
 
   return (
     <>
       <ModalBox
-        visible={modalVisible}
+        visible={visible}
         animationType={'fade'}
         transparent
-        statusBarTranslucent>
+        statusBarTranslucent
+        onRequestClose={
+          () => GlobalPopupController.hideModal()
+        }
+      >
         <Wrapper>
           <Overlay>
             <TouchableWithoutFeedback onPress={onCloseModalHandle}>
@@ -83,7 +88,6 @@ const BottomSheet = (props: BottomSheetProps) => {
             {...panResponders.panHandlers}>
             <Box>
               {props.children}
-              {/* <Title>바텀시트</Title> */}
             </Box>
           </AnimatedBox>
         </Wrapper>

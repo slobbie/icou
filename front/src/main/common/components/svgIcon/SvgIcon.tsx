@@ -8,6 +8,8 @@ export type IconProps = SvgProps & {
 }
 function SvgIcon ({
   name,
+  fill = 'black',
+  stroke = 'none',
   width: _width,
   height: _height,
   size,
@@ -26,8 +28,9 @@ function SvgIcon ({
   return (
     <Comp
       {...props}
-      // fill={fill}
-      // stroke={stroke}
+      fill={fill}
+      style={{fill: fill}}
+      stroke={stroke}
       {...sizeProps}
     />
   )

@@ -9,10 +9,10 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import styled from 'styled-components/native';
-import { routineItemInterface } from '../slice/routine';
+import {todoItemInterface} from '@feature/home/slice/todoSlice';
 
 interface CardContainerProps {
-  routine?: routineItemInterface
+  todos?: todoItemInterface
   color: string;
   priority: Animated.SharedValue<number>;
   firstPriority: Animated.SharedValue<number>;
@@ -26,7 +26,7 @@ interface CardContainerProps {
 const CardContainer = ({
   color,
   priority,
-  routine,
+  todos,
   firstPriority,
   secondPriority,
   thirdPriority,
@@ -171,8 +171,8 @@ const CardContainer = ({
           <Spacer>
             <Container>
               <Box>
-                <Title>{routine?.title}</Title>
-                <Dec>{routine?.dec}</Dec>
+                <Title>{todos?.title}</Title>
+                {/* <Dec>{todos?.dec}</Dec> */}
                 {/* <Count>{card?.count}</Count> */}
                 {/* <ConfirmButton>
                   <ButtonText>확인</ButtonText>
