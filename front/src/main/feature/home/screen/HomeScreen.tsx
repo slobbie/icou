@@ -10,6 +10,8 @@ import UpdateToItem from '@feature/home/components/UpdateToItem';
 import GlobalPopupController from '@common/components/popup/GlobalPopupController';
 import { TodoInterface, eventType } from '@feature/home/interface/home.interface';
 import todoSlice from '@feature/home/slice/todoSlice';
+import RNCalendarEvents from "react-native-calendar-events";
+import { Alert } from 'react-native';
 
 // 홈스크린
 const HomeScreen = () => {
@@ -22,8 +24,33 @@ const HomeScreen = () => {
   const routines = useSelector((state: RootState) => state.todo.todoList);
 
   const TASKS = routines.map((title, index) => ({ title, index }));
+
   // 투두리스트 상태
   const [tasks, setTasks] = useState(TASKS)
+
+
+  const getAllCalendarEvent = async () => {
+    // RNCalendarEvents.checkPermissions().then(
+    //   (result) => {
+    //     Alert.alert('Auth check', result);
+    //   },
+    //   (result) => {
+    //     console.error(result);
+    //   },
+    // );
+  }
+  //   try {
+  //   const res = await RNCalendarEvents.findCalendars();
+  //   console.log('달력', res)
+  //   } catch {
+
+  //   }
+  // }
+
+
+  useEffect(() => {
+    getAllCalendarEvent()
+  }, [])
 
 
   // TODO: dashboard 로 이동 예정

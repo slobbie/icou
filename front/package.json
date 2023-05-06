@@ -10,6 +10,7 @@
     "build-android-stage": "cd ./android && ENVFILE=.env.stage ./gradlew assembleStageRelease && cd ../",
     "build-android-production": "cd ./android && ENVFILE=.env.production ./gradlew assembleRelease && cd ../",
     "ios": "react-native run-ios",
+    "postinstall": "react-native setup-ios-permissions && pod-install",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
@@ -28,8 +29,10 @@
     "openai": "^3.2.1",
     "react": "18.1.0",
     "react-native": "0.70.6",
+    "react-native-calendar-events": "^2.2.0",
     "react-native-flipper": "^0.184.0",
     "react-native-gesture-handler": "^2.9.0",
+    "react-native-permissions": "^3.8.0",
     "react-native-reanimated": "^3.0.2",
     "react-native-safe-area-context": "^4.5.0",
     "react-native-screens": "^3.20.0",
@@ -40,6 +43,10 @@
     "rn-async-storage-flipper": "^0.0.10",
     "styled-components": "^5.3.9"
   },
+  "reactNativePermissionsIOS": [
+    "Calendars",
+    "Reminders"
+  ],
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/runtime": "^7.12.5",
